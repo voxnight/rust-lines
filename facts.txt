@@ -1,0 +1,1 @@
+Rust is known for its safety and performance, making it ideal for systems programming.
