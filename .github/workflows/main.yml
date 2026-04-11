@@ -1,0 +1,91 @@
+name: one line fact
+
+on:
+  schedule:
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+
+jobs:
+  generate-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Ollama
+        run: |
+          if ! command -v ollama &> /dev/null; then
+            curl -fsSL https://ollama.com/install.sh | sh
+          fi
+
+      - name: Generate Sentence
+        id: ai
+        run: |
+          # Start Ollama in background
+          ollama serve &
+          sleep 5
+
+          # Wait for API readiness
+          for i in {1..30}; do
+            if curl -s localhost:11434/api/tags > /dev/null 2>&1; then
+              break
+            fi
+            sleep 2
+          done
+
+          # Pull model only if needed
+          if ! ollama list 2>/dev/null | grep -q qwen3:0.6b; then
+            ollama pull qwen3:0.6b
+          fi
+
+          # Generate sentence via Ollama API - ask model for single-line output
+          RAW_SENTENCE=$(curl -s http://localhost:11434/api/generate \
+            -d '{
+              "model": "qwen3:0.6b",
+              "prompt": "Generate exactly one sentence of a fun fact about Rust programming language. Output ONLY the sentence, no line breaks, no quotes, no explanations.",
+              "stream": false
+            }' | jq -r '.response' 2>/dev/null)
+          
+          # Clean: remove ANSI codes, newlines, quotes, and collapse whitespace
+          CLEAN_SENTENCE=$(printf '%s' "$RAW_SENTENCE" | tr -d '\r' | sed -E 's/\x1b\[[0-9;]*[a-zA-Z]//g; s/"/ /g; s/^[[:space:]]+|[[:space:]]+$//g; s/[[:space:]]+/ /g')
+
+          # Validate
+          if [ -z "$CLEAN_SENTENCE" ]; then
+            echo "❌ Failed to generate valid sentence"
+            exit 1
+          fi
+          
+          echo "✨ Generated: $CLEAN_SENTENCE"
+          
+          # Write to GITHUB_OUTPUT using delimiter syntax (handles any special chars safely)
+          {
+            echo "sentence<<GITHUB_OUTPUT_DELIMITER"
+            printf '%s\n' "$CLEAN_SENTENCE"
+            echo "GITHUB_OUTPUT_DELIMITER"
+          } >> $GITHUB_OUTPUT
+
+      - name: Commit and Push Changes
+        run: |
+          SENTENCE="${{ steps.ai.outputs.sentence }}"
+          
+          if [ -z "$SENTENCE" ]; then
+            echo "⚠️ No sentence generated, skipping commit"
+            exit 0
+          fi
+          
+          # Append to log file
+          echo "$SENTENCE" >> facts.txt
+
+          # Git identity
+          git config --global user.name "${{ github.repository_owner }}"
+          git config --global user.email "${{ github.repository_owner }}@users.noreply.github.com"
+
+          # Commit and push
+          git add .
+          git commit -m "$SENTENCE"
+          git push
+          
+          echo "✅ Successfully committed: $SENTENCE"
