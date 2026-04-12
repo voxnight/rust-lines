@@ -1,1 +1,2 @@
 Rust is known for its safety and performance, making it ideal for systems programming.
+Rust uses a safe memory model to prevent memory leaks, making it safe for concurrent programs.
