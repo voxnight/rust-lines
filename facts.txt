@@ -2,3 +2,4 @@ Rust is known for its safety and performance, making it ideal for systems progra
 Rust uses a safe memory model to prevent memory leaks, making it safe for concurrent programs.
 Rust uses 'boxed' to prevent memory leaks, making it safe.
 Rust is the first programming language to implement the Rust compiler.
+Rust is a language that's a safety-first, safe, and efficient.
