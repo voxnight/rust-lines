@@ -3,3 +3,4 @@ Rust uses a safe memory model to prevent memory leaks, making it safe for concur
 Rust uses 'boxed' to prevent memory leaks, making it safe.
 Rust is the first programming language to implement the Rust compiler.
 Rust is a language that's a safety-first, safe, and efficient.
+Rust's ownership model automatically manages memory, making it a safer choice for complex programs.
