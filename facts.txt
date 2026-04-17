@@ -4,3 +4,4 @@ Rust uses 'boxed' to prevent memory leaks, making it safe.
 Rust is the first programming language to implement the Rust compiler.
 Rust is a language that's a safety-first, safe, and efficient.
 Rust's ownership model automatically manages memory, making it a safer choice for complex programs.
+Rust is the first programming language that uses a garbage-collected compiler, making it safer than other languages.
