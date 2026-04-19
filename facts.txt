@@ -6,3 +6,4 @@ Rust is a language that's a safety-first, safe, and efficient.
 Rust's ownership model automatically manages memory, making it a safer choice for complex programs.
 Rust is the first programming language that uses a garbage-collected compiler, making it safer than other languages.
 Rust's ownership model ensures that every mutable reference is owned by a single thread, preventing memory leaks.
+Rust is famous for being safe and compile-time safety.
