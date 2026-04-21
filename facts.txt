@@ -8,3 +8,4 @@ Rust is the first programming language that uses a garbage-collected compiler, m
 Rust's ownership model ensures that every mutable reference is owned by a single thread, preventing memory leaks.
 Rust is famous for being safe and compile-time safety.
 Rust is known for being safe and efficient, which makes it ideal for systems programming.
+Rust's ownership model ensures that mutable data is passed by value, making memory safety a priority.
