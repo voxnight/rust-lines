@@ -9,3 +9,4 @@ Rust's ownership model ensures that every mutable reference is owned by a single
 Rust is famous for being safe and compile-time safety.
 Rust is known for being safe and efficient, which makes it ideal for systems programming.
 Rust's ownership model ensures that mutable data is passed by value, making memory safety a priority.
+Rust is a statically typed language that ensures safety by preventing memory errors.
