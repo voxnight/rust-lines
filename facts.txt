@@ -11,3 +11,4 @@ Rust is known for being safe and efficient, which makes it ideal for systems pro
 Rust's ownership model ensures that mutable data is passed by value, making memory safety a priority.
 Rust is a statically typed language that ensures safety by preventing memory errors.
 Rust's ownership model ensures memory safety.
+Rust's static typing and memory safety make it a safe and efficient programming language.
