@@ -15,3 +15,4 @@ Rust's static typing and memory safety make it a safe and efficient programming 
 Rust's ownership model ensures that memory is safely managed, preventing common memory errors.
 Rust's ownership system is like a self-contained package.
 Rust's memory safety is based on ownership and borrowing, making it safe for concurrent programs.
+Rust is known for its safe and efficient code due to its ownership system.
